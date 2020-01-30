@@ -60,7 +60,7 @@ app.locals.title = 'Nodepop';
 
 app.use('/apiv1/authenticate', require('./routes/apiv1/authenticate'));
 app.use('/apiv1/adverts', jwtAuth(), require('./routes/apiv1/adverts'));
-
+//app.use('/apiv1/register', require('./routes/apiv1/register'));
 /**
  * Web app routes
  */

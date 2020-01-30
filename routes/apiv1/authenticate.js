@@ -12,7 +12,7 @@ router.post('/register', async (req, res, next) => {
     const data = req.body;
     
     const user = new User(data);
-
+    user.password=User.hashPassword(user.password);
     const userSaved = await user.save();
 
     res.json({ success: true, result: userSaved });
@@ -32,7 +32,7 @@ router.post('/', async (req, res, next) => {
     // hacemos un hash de la password
     const hashedPassword = User.hashPassword(password);
 
-    const user = await User.findOne({ email: email });
+    const user = await User.findOne({ email: email,password:hashedPassword });
     console.log(user + hashedPassword);
     if (!user) {
       // Respondemos que no son validas las credenciales
@@ -50,7 +50,7 @@ router.post('/', async (req, res, next) => {
         return next(err);
       }
       // respondemos con un JWT
-      res.json({ok: true, token: token})
+      res.json({ok: true, token: token,name:user.name,surname:user.surname});
     });
   } catch (err) {
     next(err);
