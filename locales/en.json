@@ -1,0 +1,18 @@
+{
+	"empty_file": "the file {{file}} is empty",
+	"not_found": "Not Found",
+	"not_valid": "Not valid",
+	"generic": "There was an error: {{err}}",
+	"Products list": "Products list",
+	"Listing: len of tot": "Listing: {{len}} of {{tot}}",
+	"Name": "Name",
+	"Sell": "Sell",
+	"Price": "Price",
+	"Photo": "Photo",
+	"Tags": "Tags",
+	"Yes": "Yes",
+	"No": "No",
+	"Name2:": "Name2:",
+	"name": "name",
+	"Type": "Type"
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link rel='stylesheet' href='https://bootswatch.com/4/cosmo/bootstrap.css' />
+
+<br/> <br/> 
+    <!-- <title><%= title %></title> -->
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+
+    <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+      <div class="container">
+        <a href="/" class="navbar-brand"><%= title %></a>
+    
+          <ul class="nav navbar-nav ml-auto">
+    <% getLocales().forEach( lang => { %>
+            <li class="nav-item">
+              <a class="nav-link"  href="/?lang=<%= lang %>"><img src="/images/langs/<%= lang %>.png"></a>
+            </li>
+        <% }) %>
+          </ul>
+    
+      </div>
+    </div>
+
+    <!-- <h1>Nodepop</h1> -->
+    <!-- <p style="text-align: center">Welcome Nodepop Advertisements</p> -->
+  
+  <h2 style="text-align: center" ><%=__('Products list') %></h2>
+  </br>
+     <div class="grid">
+    <% adList.forEach(ad => { %>
+      <article class="grid">
+        <img src="/images/<%= ad.foto %> "   width="200" height="160">
+        <ul style="margin-left:-7vw">
+            <li><%= __('Name') %>: <%= ad.nombre %> </li>
+            <li><%= __('Price') %>: <%= ad.precio %> </li>
+            <% if (ad.venta ) { %>
+              <li><%= __('Type') %>: Venta </li>
+            <% } else { %>
+              <li><%= __('Type') %>: Busqueda </li>
+            <% } %>
+              <li><%= __('Tags') %>:<%= ad.tags %></li> 
+        </ul>
+     </article>
+      <% }) %> 
+   </div>
+  
+  
+
+</body>
+</html>

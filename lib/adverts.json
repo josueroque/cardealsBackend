@@ -1,0 +1,17 @@
+{
+  "adverts":[  
+        {
+          "description":"Suzuki Alto 2009",
+          "sell":true,
+          "price":{"currency":"L","amount":"100000"},
+          "photo":"Suzuki-Alto.jpg",
+          "country":"Honduras",
+          "city":"Tegucigalpa",
+          "transmition":"mechanical",
+          "user":"josueroque@yahoo.com",
+          "brand":"Suzuki",
+          "model":"Alto",
+          "year":"2009"
+        }
+    ]
+}
