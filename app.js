@@ -91,11 +91,12 @@ app.use(function (err, req, res, next) {
   res.status(err.status);
 
   // si es un 500 lo pinto en el log
-  if (err.status && err.status >= 500) console.error(err);
-
+  console.log('desde app');
+  if (err.status && err.status >= 500) console.error(err.errmsg );
+  
   // si es una petición al API respondo JSON...
   if (isAPI(req)) {
-    res.json({ success: false, error: err.message })
+    res.json({ success: false, error: err.errmsg })
     return;
   }
 

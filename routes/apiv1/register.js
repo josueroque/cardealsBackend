@@ -9,7 +9,7 @@ const User = require('../../models/User');
 
 router.post('/', async (req, res, next) => {
     try {
-      console.log(req.body);
+      //console.log(req.body);
       const data = req.body;
       
       const user = new User(data);
@@ -19,6 +19,8 @@ router.post('/', async (req, res, next) => {
       res.json({ success: true, result: userSaved });
   
     } catch (err) {
+      console.log('desde register');
+      console.log(err);
       next(err );
     }
   });
