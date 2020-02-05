@@ -56,9 +56,10 @@ require('./models/User');
  */
 // app.use('/apiv1/agentes', require('./routes/apiv1/agentes'));
 
-app.locals.title = 'Nodepop';
+app.locals.title = 'CarsDeals';
 
 app.use('/apiv1/authenticate', require('./routes/apiv1/authenticate'));
+app.use('/apiv1/makes', require('./routes/apiv1/makes'));
 app.use('/apiv1/adverts', jwtAuth(), require('./routes/apiv1/adverts'));
 //app.use('/apiv1/register', require('./routes/apiv1/register'));
 /**

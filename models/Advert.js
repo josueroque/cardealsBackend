@@ -10,7 +10,7 @@
   // definimos un esquema
   const advertSchema = mongoose.Schema({
     user: String,
-    brand: String,
+    make: String,
     model: String,
     year:String,
     photo:String,
