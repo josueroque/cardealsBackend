@@ -11,16 +11,25 @@ const Advert = require('../../models/Advert');
 
 
 
-router.post('/',upload.single('photo'), async (req, res, next) => {
+router.post('/',upload.array('photos'), async (req, res, next) => {
   try {
-    const data = req.body;
-    console.log(data);
-    const advert = new Advert(data);
+    let data = req.body;
+//    console.log(data);
+   // console.log(req.files);
     
-    await advert.setPhoto(req.file) ;
-    
-    
-    const advertSaved = await advert.save();
+   
+  
+    console.log(data.photo);
+    data.photo=[];
+  
+//  req.files.map(element => 
+  
+   //data.photo.push(element.fieldname + '-' + data.username + '-' + element.originalname)
+  // );
+
+   const advert = new Advert(data);
+   await advert.setPhoto(req.files) ;
+   const advertSaved = await advert.save();
 
     res.json({ success: true, result: advertSaved });
 

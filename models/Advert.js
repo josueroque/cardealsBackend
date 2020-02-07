@@ -13,7 +13,7 @@
     make: String,
     model: String,
     year:String,
-    photo:String,
+    photo:Array,
     // price:Object,
     transmition:String,
     description:String,
@@ -32,7 +32,7 @@
     query.limit(numRows);
     // query.select('nombre venta');
   
-    const result = {}
+    const result = {};
   
     if (includeTotal) {
       result.total = await Advert.count();
@@ -41,7 +41,7 @@
   
     // poner ruta base a imagenes
     const ruta = configAdvert.imagesURLBasePath;
-    result.rows.forEach(r => (r.foto = r.foto ? path.join(ruta, r.foto) : null));
+    result.rows.forEach(r => (r.photo = r.photo ? path.join(ruta, r.photo) : null));
   
     if (cb) return cb(null, result); // si me dan callback devuelvo los resultados por ahí
     return result; // si no, los devuelvo por la promesa del async (async está en la primera linea de esta función)
@@ -56,6 +56,7 @@
     const dstPath = path.join(__dirname, '../public/images', imageObject.originalname)
     await fs.copy(imageObject.path, dstPath);
     this.Photo = imageObject.originalname;
+  console.log('hola' + this.Photo);
     thumbnailRequester.send({
       type: 'createThumbnail',
       image: dstPath
