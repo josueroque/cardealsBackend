@@ -19,16 +19,17 @@ router.post('/',upload.array('photos'), async (req, res, next) => {
     
    
   
-    console.log(data.photo);
+    console.log(req.files);
     data.photo=[];
   
-//  req.files.map(element => 
+ req.files.map(element => 
   
    //data.photo.push(element.fieldname + '-' + data.username + '-' + element.originalname)
-  // );
+   data.photo.push(element.filename)
+  );
 
    const advert = new Advert(data);
-   await advert.setPhoto(req.files) ;
+   //await advert.setPhoto(req.files) ;
    const advertSaved = await advert.save();
 
     res.json({ success: true, result: advertSaved });
