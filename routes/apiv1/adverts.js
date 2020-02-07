@@ -14,16 +14,18 @@ const Advert = require('../../models/Advert');
 router.post('/',upload.single('photo'), async (req, res, next) => {
   try {
     const data = req.body;
-    
+    console.log(data);
     const advert = new Advert(data);
     
     await advert.setPhoto(req.file) ;
+    
     
     const advertSaved = await advert.save();
 
     res.json({ success: true, result: advertSaved });
 
   } catch (err) {
+    console.log(err);
     next(err);
   }
 });

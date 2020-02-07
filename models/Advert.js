@@ -14,7 +14,7 @@
     model: String,
     year:String,
     photo:String,
-    price:Object,
+    // price:Object,
     transmition:String,
     description:String,
     sell:Boolean,
