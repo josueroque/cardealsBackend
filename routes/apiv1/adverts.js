@@ -10,25 +10,22 @@ const Advert = require('../../models/Advert');
 //const jwtAuth=require('../../lib/jwtAuth');
 
 
-
-router.post('/',upload.array('photos'), async (req, res, next) => {
+router.post('/create',upload.array('photos'), async (req, res, next) => {
   try {
     let data = req.body;
-//    console.log(data);
-   // console.log(req.files);
-    
-   
   
     console.log(req.files);
     data.photo=[];
   
- req.files.map(element => 
-  
-   //data.photo.push(element.fieldname + '-' + data.username + '-' + element.originalname)
-   data.photo.push(element.filename)
-  );
+    req.files.map(element => 
+        //data.photo.push(element.fieldname + '-' + data.username + '-' + element.originalname)
+        data.photo.push(element.filename)
+    );
+    data.createdAt=Date.now();
+    data.reserved=false;
+    data.active=true;
+     const advert = new Advert(data);
 
-   const advert = new Advert(data);
    //await advert.setPhoto(req.files) ;
    const advertSaved = await advert.save();
 
@@ -40,44 +37,21 @@ router.post('/',upload.array('photos'), async (req, res, next) => {
   }
 });
 
-// router.post('/',upload.single('photo'), async (req, res, next) => {
-//   try {
-//     const data = req.body;
-    
-//     const advert = new Advert(data);
-    
-//     await advert.setPhoto(req.file) ;
-    
-//     const advertSaved = await advert.save();
-
-//     res.json({ success: true, result: advertSaved });
-
-//   } catch (err) {
-//     next(err);
-//   }
-// });
-
-// router.get('/tags', async (req, res, next) => {
-//   try {
-//   const anuncios = await Advert.listTags();
-//   res.json({ success: true, results: anuncios });
-//   } catch (err) {
-//     next(err);
-//   }
-// });
 
 router.get('/',async (req, res, next) => {
 
   try {
 
-
-    const nombre = req.query.nombre;
-    const precio = req.query.precio;
+    const model = req.query.model;
+    const active=req.query.active;
+    const make = req.query.make;
+    const price = req.query.price;
     const limit = parseInt(req.query.limit);
     const fields = req.query.fields;
     const sort = req.query.sort;
-    const venta=req.query.venta;
-    const tag=req.query.tag;
+    const sell=req.query.sell;
+    const user=req.query.user;
+    
     let skip;
     
     if(req.query.skip){
@@ -113,37 +87,44 @@ router.get('/',async (req, res, next) => {
     }    
 
     let filter = {};
-    let exp = new RegExp('^' + nombre + '','i');
+    //let exp = new RegExp('^' + nombre + '','i');
    
-    if(nombre){
-    filter= {nombre:exp};
+    if(user){
+      filter= {user:user};
+    }
+
+    console.log(active);
+    if (active){
+        if (active===true){
+          filter.active=true;
+        }
     }
     
     //tag filter
-    if(tag){
-      filter.tags=tag;
-    }
+    // if(tag){
+    //   filter.tags=tag;
+    // }
 
     //venta filter
-    if (typeof venta !== 'undefined' ){
-      if(venta.toLowerCase()==='false'){
-        filter.venta=false;
+    if (typeof sell !== 'undefined' ){
+      if(sell.toLowerCase()==='false'){
+        filter.sell=false;
       }
-      else if(venta.toLowerCase()==='true'){
-        filter.venta=true;
+      else if(sell.toLowerCase()==='true'){
+        filter.sell=true;
       }
       else {
         res.status(422); 
-        throw ('Invalid venta Parameter');
+        throw ('Invalid sell Parameter');
       }
     }
 
 
     //precio filter
-  if (precio){
+  if (price){
 
     let priceStr=new String();
-    priceStr=precio.split('');
+    priceStr=price.split('');
     let hyphen='';
     let countHyphen=0;
     let hyphenPosition=0;
@@ -181,47 +162,47 @@ let number1=0;
 let number2=0;
 let objectFilter={};
 
-    if (typeof precio !== 'undefined') {
+    if (typeof price !== 'undefined') {
       switch(hyphen){
         case ('start'):
-          number1=precio.replace('-','');
+          number1=price.replace('-','');
           if(isNaN(number1)){
             res.status(422);
-            throw('Invalid precio parameter');
+            throw('Invalid price parameter');
           }
           objectFilter['$lt']=parseInt(number1);
           filter.precio=objectFilter; 
           break;
         case ('middle'):
-          number1=precio.substring(0,(hyphenPosition));
-          number2=precio.substring((hyphenPosition+1),(precio.length));
+          number1=price.substring(0,(hyphenPosition));
+          number2=price.substring((hyphenPosition+1),(price.length));
           if(isNaN(number1)||isNaN(number2)){
             res.status(422);
-            throw('Invalid precio parameter');
+            throw('Invalid price parameter');
           }
           objectFilter['$gt']=parseInt(number1);
           objectFilter['$lt']=parseInt(number2);
-          filter.precio=objectFilter; 
+          filter.price=objectFilter; 
           break;    
         case ('end'):
-          number1=precio.replace('-','');
+          number1=price.replace('-','');
           if(isNaN(number1)){
             res.status(422);
-            throw('Invalid precio parameter');
+            throw('Invalid price parameter');
           }
           objectFilter['$gt']=parseInt(number1);
-          filter.precio=objectFilter; 
+          filter.price=objectFilter; 
           break;   
         case ('undef'):
-            if(isNaN(precio)){
+            if(isNaN(price)){
               res.status(422);
-              throw('Invalid precio parameter');
+              throw('Invalid price parameter');
             }
-          filter.precio=precio; 
+          filter.price=price; 
           break;            
         case ('notvalid'):
           res.status(422); 
-          throw ('Invalid precio Parameter');
+          throw ('Invalid price Parameter');
           // return;
           // break;                 
       }
@@ -230,6 +211,7 @@ let objectFilter={};
     }
   }
   
+    console.log(filter);
     const adverts = await Advert.list({ filter: filter, skip, limit, fields, sort});
 
 

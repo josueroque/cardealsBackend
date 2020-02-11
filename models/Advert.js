@@ -15,12 +15,15 @@
     model: String,
     year:String,
     photo:Array,
-    // price:Object,
+    price:Object,
     transmition:String,
     description:String,
     sell:Boolean,
     country:String,
-    city:String
+    city:String,
+    active:Boolean,
+    reserved:Boolean,
+    createdAt:Date
 
   }
 

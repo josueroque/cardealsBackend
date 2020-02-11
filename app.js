@@ -60,7 +60,9 @@ app.locals.title = 'CarsDeals';
 
 app.use('/apiv1/authenticate', require('./routes/apiv1/authenticate'));
 app.use('/apiv1/makes', require('./routes/apiv1/makes'));
-app.use('/apiv1/adverts', jwtAuth(), require('./routes/apiv1/adverts'));
+app.use('/apiv1/adverts',  require('./routes/apiv1/adverts'));
+app.use('/apiv1/adverts/create', jwtAuth(), require('./routes/apiv1/adverts'));
+
 //app.use('/apiv1/register', require('./routes/apiv1/register'));
 /**
  * Web app routes
