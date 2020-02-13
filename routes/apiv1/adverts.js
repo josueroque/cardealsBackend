@@ -37,6 +37,22 @@ router.post('/create',upload.array('photos'), async (req, res, next) => {
   }
 });
 
+router.delete('/:id', async (req, res, next) => {
+  try {
+
+    const _id = req.params.id;
+   //await advert.setPhoto(req.files) ;
+    await Advert.deleteOne({ _id: _id}).exec();
+
+    res.json({ success: true, result: 'item deleted!' });
+
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+});
+
+
 
 router.get('/',async (req, res, next) => {
 
