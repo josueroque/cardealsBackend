@@ -9,6 +9,25 @@ const Advert = require('../../models/Advert');
 
 //const jwtAuth=require('../../lib/jwtAuth');
 
+router.put('/:id', async (req, res, next) => {
+  try {
+    let data = req.body;
+
+    const _id=req.params.id;
+    console.log('PUT');
+   console.log(data);
+
+   const advertSaved = await Advert.findOneAndUpdate({_id: _id}, data, { new: true }).exec();
+
+    res.json({ success: true, result: advertSaved });
+
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+});
+
+
 router.post('/create',upload.array('photos'), async (req, res, next) => {
   try {
     let data = req.body;
