@@ -9,7 +9,6 @@ const Advert = require('../../models/Advert');
 
 //const jwtAuth=require('../../lib/jwtAuth');
 
-
 router.post('/create',upload.array('photos'), async (req, res, next) => {
   try {
     let data = req.body;
@@ -24,6 +23,15 @@ router.post('/create',upload.array('photos'), async (req, res, next) => {
     data.createdAt=Date.now();
     data.reserved=false;
     data.active=true;
+    data.city='Tegucigalpa';
+    console.log(data);
+    console.log(data.price);
+    if(data.type==='sell'){
+      data.sell=true;
+    }
+    else{
+      data.sell=false;
+    }
      const advert = new Advert(data);
 
    //await advert.setPhoto(req.files) ;
@@ -67,7 +75,7 @@ router.get('/',async (req, res, next) => {
     const sort = req.query.sort;
     const sell=req.query.sell;
     const user=req.query.user;
-    
+    const id=req.query.id;
     let skip;
     
     if(req.query.skip){
@@ -227,7 +235,12 @@ let objectFilter={};
     }
   }
   
-    console.log(filter);
+    if (id){
+      filter._id=id;    
+    }
+    console.log('filter');
+      
+      console.log(filter);
     const adverts = await Advert.list({ filter: filter, skip, limit, fields, sort});
 
 
