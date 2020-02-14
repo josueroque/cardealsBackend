@@ -91,7 +91,7 @@ router.get('/',async (req, res, next) => {
     const price = req.query.price;
     const limit = parseInt(req.query.limit);
     const fields = req.query.fields;
-    const sort = req.query.sort;
+    let sort = req.query.sort;
     const sell=req.query.sell;
     const user=req.query.user;
     const id=req.query.id;
@@ -257,9 +257,14 @@ let objectFilter={};
     if (id){
       filter._id=id;    
     }
-    console.log('filter');
-      
-      console.log(filter);
+
+    if(!sort){
+   sort='-createdAt';
+  
+    }
+    console.log('sort');
+    console.log(sort);
+   //let sort={sort:'createdAt:-1'};
     const adverts = await Advert.list({ filter: filter, skip, limit, fields, sort});
 
 
