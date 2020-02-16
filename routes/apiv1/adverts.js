@@ -85,9 +85,9 @@ router.get('/',async (req, res, next) => {
 
   try {
 
-    const model = req.query.model;
+   
     const active=req.query.active;
-    const make = req.query.make;
+
     const price = req.query.price;
     const limit = parseInt(req.query.limit);
     const fields = req.query.fields;
@@ -95,7 +95,10 @@ router.get('/',async (req, res, next) => {
     const sell=req.query.sell;
     const user=req.query.user;
     const id=req.query.id;
+    const make = req.query.make;
+    const model = req.query.model;
     let skip;
+
     
     if(req.query.skip){
       if (isNaN(req.query.skip)){
@@ -135,6 +138,15 @@ router.get('/',async (req, res, next) => {
     if(user){
       filter= {user:user};
     }
+    
+    if(make){
+      filter= {...filter,make:make};
+    }
+
+    if(model){
+      filter= {...filter,model:model};
+    }
+    
 
     console.log(active);
     if (active){
@@ -161,7 +173,6 @@ router.get('/',async (req, res, next) => {
         throw ('Invalid sell Parameter');
       }
     }
-
 
     //precio filter
   if (price){
@@ -251,8 +262,8 @@ let objectFilter={};
       }
       
    
-    }
-  }
+   }
+ }
   
     if (id){
       filter._id=id;    
