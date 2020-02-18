@@ -54,14 +54,13 @@ require('./models/User');
 /**
  * API Routes
  */
-// app.use('/apiv1/agentes', require('./routes/apiv1/agentes'));
-
 app.locals.title = 'CarsDeals';
 
 app.use('/apiv1/authenticate', require('./routes/apiv1/authenticate'));
 app.use('/apiv1/makes', require('./routes/apiv1/makes'));
 app.use('/apiv1/adverts',  require('./routes/apiv1/adverts'));
 app.use('/apiv1/adverts/create', jwtAuth(), require('./routes/apiv1/adverts'));
+app.use('/apiv1/users', jwtAuth(), require('./routes/apiv1/users'));
 
 //app.use('/apiv1/register', require('./routes/apiv1/register'));
 /**

@@ -9,6 +9,7 @@ const userSchema = mongoose.Schema({
   nickname:{ type: String, unique: true },
   email: { type: String, unique: true },
   password: String,
+  favorites:Array
 });
 
 userSchema.statics.hashPassword = function (plain) {
