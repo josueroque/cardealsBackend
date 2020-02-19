@@ -269,6 +269,16 @@ let objectFilter={};
       filter._id=id;    
     }
 
+console.log('id');
+ console.log(id);
+    if (id){
+      if(id.includes(',')){
+      let id2=id.split(',');
+        console.log('id2');
+        console.log(id2);
+        filter._id=id2;    
+      }
+    }
     if(!sort){
    sort='-createdAt';
   
@@ -283,6 +293,7 @@ let objectFilter={};
 
 
   } catch (err) {
+    console.log(err);
      return  res.next(err);
     //next(err);
   }
