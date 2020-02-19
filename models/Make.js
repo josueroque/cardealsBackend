@@ -1,6 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
+//const configMakes = require('../local_config').makes;
 // definimos un esquema
     const makeSchema = mongoose.Schema({
         name: String,
@@ -32,3 +33,4 @@ return query.exec();
 const Make = mongoose.model('Make', makeSchema);
 
 module.exports = Make;
+
