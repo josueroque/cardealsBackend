@@ -1,11 +1,14 @@
 {
   "adverts":[  
         {
-          "description":"Suzuki Alto 2009",
+          "description":"Turismo super econonomico en perfecto estado",
           "sell":true,
-          "price":{"currency":"L","amount":"100000"},
-          "photo":"Suzuki-Alto.jpg",
+          "price":100000,
+          "currency":"L",
+          "photo":["Suzuki-Alto.jpg"],
           "country":"Honduras",
+          "active":true,
+          "reserved":false,
           "city":"Tegucigalpa",
           "transmition":"manual",
           "user":"josueroque@yahoo.com",
