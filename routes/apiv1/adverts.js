@@ -32,7 +32,7 @@ router.post('/create',upload.array('photos'), async (req, res, next) => {
   try {
     let data = req.body;
   
-    console.log(req.files);
+    //console.log(req.files);
     data.photo=[];
   
     req.files.map(element => 
@@ -51,6 +51,8 @@ router.post('/create',upload.array('photos'), async (req, res, next) => {
     else{
       data.sell=false;
     }
+
+    
      const advert = new Advert(data);
 
    //await advert.setPhoto(req.files) ;
