@@ -20,17 +20,27 @@ router.put('/:id', async (req, res, next) => {
 
     const advertSaved = await Advert.findOneAndUpdate({_id: _id}, data, { new: true }).exec();
     
-    if (data.amountChanged===true){
+    if (data.amountChanged===true || data.active===false ||data.reserved===true){
       console.log('desde for');
-      console.log(users);
-      console.log(users.length);
+      // console.log(users);
+      // console.log(users.length);
        for (let i=0;i<users.length;i++){
         console.log(_id);
           if (users[i].favorites.includes(_id)){  
             const dbuser = await User.findOne({ email: users[i].email });//user is email here
             console.log(dbuser);
-            const result= await dbuser.sendEmail('josueroquehn@gmail.com','prueba email','Ha cambiado de precio el anuncio<b>'+data.make+' '+data.model +' ' +'</b>')
-            console.log(result);   
+            if (data.amountChanged===true){
+            let result= await dbuser.sendEmail('josueroquehn@yahoo.com','prueba email','Ha cambiado de precio el anuncio<b>'+_id +' ' +'</b>');
+            console.log(result);    
+            }
+            if (data.active===false){
+              let result= await dbuser.sendEmail('josueroquehn@yahoo.com','prueba email','El anuncio <b>'+ _id +' ' +'</b>'+' ha sido marcado como vendido ');
+              console.log(result);    
+            }
+            if (data.reserved===true){
+            let result= await dbuser.sendEmail('josueroquehn@yahoo.com','prueba email','El anuncio <b>'+_id +' ' +'</b>'+' ha sido marcado como reservado ');
+            console.log(result);    
+            }
           }
        }
        //console.log(result);
@@ -89,6 +99,7 @@ router.delete('/:id', async (req, res, next) => {
     const _id = req.params.id;
    //await advert.setPhoto(req.files) ;
     await Advert.deleteOne({ _id: _id}).exec();
+    await User.updateMany( {}, { $pullAll: {favorites: [_id] } });
 
     res.json({ success: true, result: 'item deleted!' });
 
