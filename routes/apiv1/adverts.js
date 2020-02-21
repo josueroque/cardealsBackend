@@ -104,7 +104,7 @@ router.delete('/:id', async (req, res, next) => {
     res.json({ success: true, result: 'item deleted!' });
 
   } catch (err) {
-    console.log(err);
+    console.log(err); 
     next(err);
   }
 });
