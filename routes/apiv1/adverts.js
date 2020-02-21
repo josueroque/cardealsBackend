@@ -5,6 +5,7 @@ const express = require('express');
 const upload=require('../../lib/multerConfig');
 const router = express.Router();
 const Advert = require('../../models/Advert');
+const User = require('../../models/User');
 //const { query, body, param, validationResult } = require('express-validator');
 
 //const jwtAuth=require('../../lib/jwtAuth');
@@ -12,13 +13,29 @@ const Advert = require('../../models/Advert');
 router.put('/:id', async (req, res, next) => {
   try {
     let data = req.body;
-
+    const users = await User.list();
     const _id=req.params.id;
     console.log('PUT');
-   console.log(data);
+    console.log(data);
 
-   const advertSaved = await Advert.findOneAndUpdate({_id: _id}, data, { new: true }).exec();
-
+    const advertSaved = await Advert.findOneAndUpdate({_id: _id}, data, { new: true }).exec();
+    
+    if (data.amountChanged===true){
+      console.log('desde for');
+      console.log(users);
+      console.log(users.length);
+       for (let i=0;i<users.length;i++){
+        console.log(_id);
+          if (users[i].favorites.includes(_id)){  
+            const dbuser = await User.findOne({ email: users[i].email });//user is email here
+            console.log(dbuser);
+            const result= await dbuser.sendEmail('josueroquehn@gmail.com','prueba email','Ha cambiado de precio el anuncio<b>'+data.make+' '+data.model +' ' +'</b>')
+            console.log(result);   
+          }
+       }
+       //console.log(result);
+    }
+     
     res.json({ success: true, result: advertSaved });
 
   } catch (err) {

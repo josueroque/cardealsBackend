@@ -4,6 +4,21 @@ const express = require('express');
 const router = express.Router();
 const User = require('../../models/User');
 
+router.get('/', async (req, res, next) => {
+  try {
+   
+    const users = await User.list();
+
+    res.json({ success: true, results: users });
+
+  } catch (err) {
+    console.log('desde auth');
+    console.log(err);
+    next(err );
+  }
+});
+
+
 router.put('/:id', async (req, res, next) => {
     try {
       let data = req.body;
