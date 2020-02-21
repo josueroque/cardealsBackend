@@ -11,6 +11,7 @@
   // definimos un esquema
   const advertSchema = mongoose.Schema({
     user: String,
+    unserNickname:String,
     make: String,
     model: String,
     year:String,
@@ -24,7 +25,8 @@
     city:String,
     active:Boolean,
     reserved:Boolean,
-    createdAt:Date
+    createdAt:Date,
+
 
   }
 
