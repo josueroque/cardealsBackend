@@ -6,6 +6,7 @@ const upload=require('../../lib/multerConfig');
 const router = express.Router();
 const Advert = require('../../models/Advert');
 const User = require('../../models/User');
+//let cors = require('cors');
 //const { query, body, param, validationResult } = require('express-validator');
 
 //const jwtAuth=require('../../lib/jwtAuth');
