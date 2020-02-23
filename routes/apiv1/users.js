@@ -3,6 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../../models/User');
+const Advert = require('../../models/Advert');
 
 router.get('/', async (req, res, next) => {
   try {
@@ -37,5 +38,24 @@ router.put('/:id', async (req, res, next) => {
       next(err);
     }
   });
-    
+
+  router.delete('/:id', async (req, res, next) => {
+    try {
+  
+      const _id = req.params.id;
+      const email=req.get('email');
+     //await advert.setPhoto(req.files) ;
+    //  console.log('desde delete');
+    //  console.log(email);
+      await Advert.deleteMany ({ user: email}).exec();
+      await User.deleteOne({ _id: _id}).exec();
+  
+      res.json({ success: true, result: 'item deleted!' });
+  
+    } catch (err) {
+      console.log(err); 
+      next(err);
+    }
+  });
+
   module.exports = router;
