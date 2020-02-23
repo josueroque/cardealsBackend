@@ -31,15 +31,15 @@ router.put('/:id', async (req, res, next) => {
             const dbuser = await User.findOne({ email: users[i].email });//user is email here
             console.log(dbuser);
             if (data.amountChanged===true){
-            let result= await dbuser.sendEmail('josueroquehn@yahoo.com','prueba email','Ha cambiado de precio el anuncio<b>'+_id +' ' +'</b>');
+            let result= await dbuser.sendEmail('carsdealshn@gmail.com','Cambio precio','Ha cambiado de precio el anuncio<b>'+_id +' ' +'</b>');
             console.log(result);    
             }
             if (data.active===false){
-              let result= await dbuser.sendEmail('josueroquehn@yahoo.com','prueba email','El anuncio <b>'+ _id +' ' +'</b>'+' ha sido marcado como vendido ');
+              let result= await dbuser.sendEmail('carsdealshn@gmail.com','Producto vendido','El anuncio <b>'+ _id +' ' +'</b>'+' ha sido marcado como vendido ');
               console.log(result);    
             }
             if (data.reserved===true){
-            let result= await dbuser.sendEmail('josueroquehn@yahoo.com','prueba email','El anuncio <b>'+_id +' ' +'</b>'+' ha sido marcado como reservado ');
+            let result= await dbuser.sendEmail('carsdealshn@gmail.com','Producto reservado','El anuncio <b>'+_id +' ' +'</b>'+' ha sido marcado como reservado ');
             console.log(result);    
             }
           }
