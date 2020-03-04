@@ -4,6 +4,72 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const User = require('../../models/User');
+const uuidv1 = require('uuid/v1');
+const bcrypt = require('bcrypt');
+const ResetRequest = require('../../models/resetRequests');
+
+router.put('/reset', async(req, res,next) => {
+try {
+  
+  const thisRequest = await ResetRequest.findOne({id:req.body.id});
+  console.log('request');
+  console.log(req.body.password);
+  if (thisRequest) {
+      const user = await User.findOne({email:thisRequest.email});
+//      const hashed= await bcrypt.hash(req.body.password, 10);
+      const hashed=User.hashPassword(req.body.password);
+      console.log('user');
+      console.log(user._id);          
+      user.password = hashed;
+      
+      await User.findOneAndUpdate({_id: user._id} ,{password:hashed},{ new: true }).exec();
+      res.status(204).json('password changed!');
+
+  //     bcrypt.hash(req.body.password, 10).then(hashed => {
+  //         console.log('user');
+  //         console.log(user);          
+  //         user.password = hashed;
+  //         User.findOneAndUpdate(user);
+  //         res.status(204).json('password changed!');
+  //     });
+   } else {
+       res.status(404).json('Request not found');
+ }
+} catch (error) {
+  next(error);
+}}
+);
+
+router.post('/forgot', async(req,res,next) => {
+  try {
+
+  const thisUser =await User.findOne({email:req.body.email});
+
+  if (thisUser) {
+      const id = uuidv1();
+      const request = {
+          id,
+          email: thisUser.email,
+      };
+     await ResetRequest.create(request);
+      console.log('user');
+      console.log(thisUser);
+      let result= await thisUser.sendEmail(
+        'carsdealshn@gmail.com',
+        'Reset password',
+        `To reset your password, please click on this link: http://localhost:3001/reset/${id}`);
+      console.log(result);    
+
+      // sendResetLink(thisUser.email, id);
+  }
+  res.status(200).json('Request created!');
+
+} catch (err) {
+  console.log(err);
+  next(err );
+}
+
+});
 
 //Register
 router.post('/register', async (req, res, next) => {

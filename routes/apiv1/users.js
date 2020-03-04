@@ -5,6 +5,8 @@ const router = express.Router();
 const User = require('../../models/User');
 const Advert = require('../../models/Advert');
 
+
+
 router.get('/', async (req, res, next) => {
   try {
    
