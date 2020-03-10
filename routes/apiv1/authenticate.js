@@ -57,7 +57,7 @@ router.post('/forgot', async(req,res,next) => {
       let result= await thisUser.sendEmail(
         'carsdealshn@gmail.com',
         'Reset password',
-        `To reset your password, please click on this link: http://localhost:3001/reset/${id}`);
+        `To reset your password, please click on this link: http://localhost:3000/reset/${id}`);
       console.log(result);    
 
       // sendResetLink(thisUser.email, id);
