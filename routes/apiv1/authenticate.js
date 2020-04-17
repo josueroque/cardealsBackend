@@ -46,6 +46,7 @@ router.post('/forgot', async(req,res,next) => {
   const thisUser =await User.findOne({email:req.body.email});
 
   if (thisUser) {
+      console.log('desde endpoint pass: '+ process.env.mailPassword  + ' user: '+ process.env.mailUser);
       const id = uuidv1();
       const request = {
           id,
@@ -54,10 +55,11 @@ router.post('/forgot', async(req,res,next) => {
      await ResetRequest.create(request);
       console.log('user');
       console.log(thisUser);
+     
       let result= await thisUser.sendEmail(
         'carsdealshn@gmail.com',
         'Reset password',
-        `To reset your password, please click on this link: http://localhost:3000/ResetPassword/${id}`);
+        `To reset your password, please click on this link: https://carsdeals.netlify.app/ResetPassword/${id}`);
       console.log(result);    
 
       // sendResetLink(thisUser.email, id);
