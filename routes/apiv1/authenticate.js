@@ -6,7 +6,7 @@ const router = express.Router();
 const User = require('../../models/User');
 const uuidv1 = require('uuid/v1');
 const bcrypt = require('bcrypt');
-const ResetRequest = require('../../models/resetRequests');
+const ResetRequest = require('../../models/ResetRequests');
 
 router.put('/reset', async(req, res,next) => {
 try {
